@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 from __future__ import absolute_import
 from TravelGuide.prod_settings import *
 
-import os
+import os,sys
 from celery.schedules import crontab
 
 
@@ -126,7 +126,13 @@ DATABASES = {
         'PORT': POSTGRESQL_ADDON_PORT,
     }
 }
-
+if 'test' in sys.argv:
+    DATABASES['default'] = {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'TravelGuide',
+        'HOST': 'localhost',
+        'PORT': 5432,
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators

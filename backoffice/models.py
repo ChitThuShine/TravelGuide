@@ -7,7 +7,7 @@ from django.db.models.signals import *
 
 # Models here.
 class Category(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100,db_index=True)
     createdAt = models.DateTimeField(auto_now=True)
     updatedAt = models.DateTimeField(auto_now=True)
     def __unicode__(self):
