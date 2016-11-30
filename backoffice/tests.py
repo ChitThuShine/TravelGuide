@@ -14,5 +14,5 @@ class CategoryTests(TestCase):
         Vérifie si la categorie de type Bars existe bien
         """
         self.assertTrue(
-            Category.objects.filter(name='Bar').exists()
+            Category.objects.filter(name='Bars').exists()
         )
