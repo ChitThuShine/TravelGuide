@@ -17,8 +17,7 @@ POSTGRESQL_ADDON_PASSWORD = os.getenv("POSTGRESQL_ADDON_PASSWORD")
 POSTGRESQL_ADDON_USER = os.getenv("POSTGRESQL_ADDON_USER")
 MEDIA_URL = 'http://app-fc3dfb6c-6a65-4b24-a1ca-88dac7fcbd85.cleverapps.io/storage/'
 MEDIA_ROOT = os.getenv('APP_HOME')+'/static/storage/'
-STATIC_FILES_PATH = os.getenv('APP_HOME')+'/static/static/'
-STATIC_URL_PREFIX='/static/'
+STATIC_ROOT = os.getenv('APP_HOME')+'/static/static/'
 REDIS_BROKER=''
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 # To send push on production set Debug=FALSE sinon a TRUE en PREPROD
