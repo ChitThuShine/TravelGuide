@@ -1,0 +1,10 @@
+{ "deploy": {
+   "module": "TravelGuide_wsgi",
+    "static": "/static/",
+    "celery": {
+      "module": "TravelGuide",
+      "logfile": "/static/storage/logcelery.txt",
+      "beat": true
+    }
+  }
+}
