@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 from __future__ import absolute_import
-from TravelGuide.prod_settings import *
+from TravelGuide.dev_settings import *
 
 import os,sys
 from celery.schedules import crontab
