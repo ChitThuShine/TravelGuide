@@ -28,8 +28,7 @@ SECRET_KEY = 'jub=6&x=(97_)x74=^y$+4tyg)@-@r*uvlo_o!)vv_l6)-%tb)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -234,7 +233,7 @@ REST_FRAMEWORK_CACHE = {
 # Gestion automatique (batchs) de certains traitements tels que l'envoi de
 #
 ##############################################################################
-BROKER_URL =REDIS_BROKER
+BROKER_URL=REDIS_BROKER
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
