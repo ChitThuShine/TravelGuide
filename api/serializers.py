@@ -1,7 +1,11 @@
 from backoffice.models import *
 from rest_framework import serializers
+from rest_framework import serializers
+# You must import the CachedSerializerMixin and cache_registry
+from rest_framework_cache.serializers import CachedSerializerMixin
+from rest_framework_cache.registry import cache_registry
 
-class CategorySerializer(serializers.ModelSerializer):
+class CategorySerializer(CachedSerializerMixin):
     class Meta:
         model = Category
         exclude = ('createdAt',)
@@ -24,4 +28,6 @@ class LieuSerializer(serializers.ModelSerializer):
         model = Lieu
         fields = '__all__'
 
+
+cache_registry.register(CategorySerializer)
 

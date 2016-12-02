@@ -1,5 +1,8 @@
 from django.conf.urls import url
 from api.views import category,users,lieux
+from rest_framework_cache.registry import cache_registry
+
+cache_registry.autodiscover()
 
 urlpatterns = [
         url(r'^category/$',

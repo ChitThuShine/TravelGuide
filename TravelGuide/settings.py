@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'rest_framework_gis',
     'rest_framework_docs',
     'push_notifications',
+    'rest_framework_cache',
 ]
 
 PUSH_NOTIFICATIONS_SETTINGS = {
@@ -90,6 +91,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.cache.UpdateCacheMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
 ROOT_URLCONF = 'TravelGuide.urls'
@@ -126,7 +129,7 @@ DATABASES = {
         'PORT': POSTGRESQL_ADDON_PORT,
     }
 }
-if 'test' in sys.argv:
+if ('test' in sys.argv) or DEBUG==True:
     DATABASES['default'] = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'TravelGuide',
@@ -209,25 +212,41 @@ LOGGING = {
     }
 }
 
+##### CACHE #########
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": REDIS_BROKER,
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+
+REST_FRAMEWORK_CACHE = {
+    'DEFAULT_CACHE_BACKEND': 'default',
+    'DEFAULT_CACHE_TIMEOUT': 86400,  # Default is 1 day
+}
 
 ################################### CELERY ###################################
 #
 # Gestion automatique (batchs) de certains traitements tels que l'envoi de
 #
 ##############################################################################
-#BROKER_URL =REDIS_BROKER
-#CELERY_ACCEPT_CONTENT = ['application/json']
-#CELERY_TASK_SERIALIZER = 'json'
-#CELERY_RESULT_SERIALIZER = 'json'
-#CELERY_TIMEZONE = 'Europe/Paris'
-#from datetime import timedelta
-#CELERY_IMPORTS = (
-#    'backoffice.tasks',
-#)
-#CELERYBEAT_SCHEDULE = {
-#    'add-every-minutes-openinghours': {
-#        'task': 'backoffice.tasks.task_check_notifications',
-#        'schedule': crontab(minute='*', hour='9-22'),
-#        'args': ()
-#    },
-#}
+BROKER_URL =REDIS_BROKER
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Europe/Paris'
+from datetime import timedelta
+CELERY_IMPORTS = (
+    'backoffice.tasks',
+)
+CELERYBEAT_SCHEDULE = {
+    'add-every-minutes-openinghours': {
+        'task': 'backoffice.tasks.task_check_notifications',
+        'schedule': crontab(minute='*', hour='9-22'),
+        'args': ()
+    },
+}
